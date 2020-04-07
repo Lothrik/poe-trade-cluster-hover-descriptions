@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         poe-trade-cluster-hover-descriptions
 // @namespace    github.com/Lothrik
-// @version      2020.04.07-1
-// @description  Adds mouseover descriptions to all cluster jewel keystones and notables on pathofexile.com/trade.
+// @version      2020.04.07.2
+// @description  Adds mouseover descriptions to all cluster jewel keystones and notables on pathofexile.com/trade and poe.trade/search.
 // @author       Lothrik (MaXiMiUS)#1560 (discordapp.com)
 // @license      MIT
 // @include      *pathofexile.com/trade*
+// @include      *poe.trade/search*
 // ==/UserScript==
 
 /*
@@ -326,19 +327,31 @@ var notables = {
     "Student of Decay":"25% increased Damage over Time&#10;+13% to Chaos Resistance"
 };
 
+var current_trade_site = 0;
+if (window.location.href.indexOf("pathofexile.com/trade") > -1) {
+    current_trade_site = 1;
+} else if (window.location.href.indexOf("poe.trade/search") > -1) {
+    current_trade_site = 2;
+}
+
 function parseNotables() {
-    var newitems = document.querySelectorAll('.itemBoxContent .content:not(.has-cluster-descriptions)');
-    newitems.forEach(function(item) {
+    var item = null;
+    if (current_trade_site == 1) {
+        item = document.querySelector('.itemBoxContent .content:not(.has-cluster-descriptions)');
+    } else if (current_trade_site == 2) {
+        item = document.querySelector('.item .item-cell:not(.has-cluster-descriptions)');
+    }
+    if (item) {
         for (const [key, value] of Object.entries(keystones)) {
             var keystone_match_string = 'Adds ' + key;
-            item.innerHTML = item.innerHTML.replace(keystone_match_string, '<span title="' + value + '">' + keystone_match_string + '</span>');
+            item.innerHTML = item.innerHTML.replace(keystone_match_string + '</', '<span title="' + value + '">' + keystone_match_string + '</span></');
         };
         for (const [key, value] of Object.entries(notables)) {
             var notable_match_string = '1 Added Passive Skill is ' + key;
-            item.innerHTML = item.innerHTML.replace(notable_match_string, '<span title="' + value + '">' + notable_match_string + '</span>');
+            item.innerHTML = item.innerHTML.replace(notable_match_string + '</', '<span title="' + value + '">' + notable_match_string + '</span></');
         };
         item.classList.add('has-cluster-descriptions');
-    });
+    }
 };
 
-setInterval(parseNotables, 1000);
+setInterval(parseNotables, 50);
