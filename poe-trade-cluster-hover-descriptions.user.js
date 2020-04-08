@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         poe-trade-cluster-hover-descriptions
 // @namespace    github.com/Lothrik
-// @version      2020.04.07.2
+// @version      2020.04.08.1
 // @description  Adds mouseover descriptions to all cluster jewel keystones and notables on pathofexile.com/trade and poe.trade/search.
 // @author       Lothrik (MaXiMiUS)#1560 (discordapp.com)
 // @license      MIT
@@ -16,7 +16,7 @@ var keys = Array.prototype.slice.call(document.querySelectorAll('.passive-header
 var values = Array.prototype.slice.call(document.querySelectorAll('.passive-stats'));
 var obj = {};
 
-keys.forEach(function(key, index){
+keys.forEach(function(key, index) {
   obj[key.textContent] = values[index].innerHTML.split('<br>').join('&#10;');
 });
 
@@ -27,7 +27,7 @@ console.log(JSON.stringify(obj));
 The following changes were manually added to the keystones below:
     None. GGG hasn't modified any cluster jewel keystones as of patch 3.10.1c.
 */
-var keystones = {
+const keystones = {
     "Disciple of Kitava":"Every second, Consume a nearby Corpse to Recover 5% of Life and Mana&#10;10% more Damage taken if you haven't Consumed a Corpse Recently",
     "Lone Messenger":"You can only have one Herald&#10;50% more Effect of Herald Buffs on you&#10;100% more Damage with Hits from Herald Skills&#10;50% more Damage Over Time with Herald Skills&#10;Minions from Herald Skills deal 25% more Damage&#10;Your Aura Skills are Disabled",
     "Nature's Patience":"Gain 2 Grasping Vines each second while stationary&#10;2% chance to deal Double Damage per Grasping Vine&#10;1% less Damage taken per Grasping Vine",
@@ -43,7 +43,7 @@ The following changes were manually added to the notables below:
         Reduced the value of "Auras from your Skills grant 0.2% of Life Regenerated per second to you and Allies" found on the Replenishing Presence notable to 0.1%.
         The Purposeful Harbinger notable now grants "Aura Buffs from Skills have 10% increased Effect on you for each Herald affecting you".
 */
-var notables = {
+const notables = {
     "Prodigious Defence":"3% Chance to Block Spell Damage&#10;30% increased Attack Damage while holding a Shield&#10;+3% Chance to Block Attack Damage",
     "Advance Guard":"Attack Skills deal 30% increased Damage while holding a Shield&#10;Ignore all Movement Penalties from Armour&#10;5% increased Movement Speed while holding a Shield",
     "Gladiatorial Combat":"2% increased Attack Damage per 75 Armour or Evasion Rating on Shield&#10;+1% to Critical Strike Multiplier per 10 Maximum Energy Shield on Shield",
@@ -327,10 +327,16 @@ var notables = {
     "Student of Decay":"25% increased Damage over Time&#10;+13% to Chaos Resistance"
 };
 
+const keystone_prefix = 'Adds ';
+const re_keystones = new RegExp(keystone_prefix + Object.keys(keystones).join('<|' + keystone_prefix) + '<', 'g');
+
+const notable_prefix = '1 Added Passive Skill is ';
+const re_notables = new RegExp(notable_prefix + Object.keys(notables).join('<|' + notable_prefix) + '<', 'g');
+
 var current_trade_site = 0;
-if (window.location.href.indexOf("pathofexile.com/trade") > -1) {
+if (window.location.href.indexOf('pathofexile.com/trade') > -1) {
     current_trade_site = 1;
-} else if (window.location.href.indexOf("poe.trade/search") > -1) {
+} else if (window.location.href.indexOf('poe.trade/search') > -1) {
     current_trade_site = 2;
 }
 
@@ -342,16 +348,25 @@ function parseNotables() {
         item = document.querySelector('.item .item-cell:not(.has-cluster-descriptions)');
     }
     if (item) {
-        for (const [key, value] of Object.entries(keystones)) {
-            var keystone_match_string = 'Adds ' + key;
-            item.innerHTML = item.innerHTML.replace(keystone_match_string + '</', '<span title="' + value + '">' + keystone_match_string + '</span></');
-        };
-        for (const [key, value] of Object.entries(notables)) {
-            var notable_match_string = '1 Added Passive Skill is ' + key;
-            item.innerHTML = item.innerHTML.replace(notable_match_string + '</', '<span title="' + value + '">' + notable_match_string + '</span></');
-        };
+        if (item.innerHTML.indexOf(keystone_prefix) > -1) {
+            item.innerHTML = item.innerHTML.replace(re_keystones, function(match) {
+                const keystone_name = match.substring(keystone_prefix.length, match.length - 1);
+                const keystone_description = keystones[keystone_name];
+                return '<span title="' + keystone_description + '">' + keystone_prefix + keystone_name + '</span><';
+            });
+        }
+        if (item.innerHTML.indexOf(notable_prefix) > -1) {
+            item.innerHTML = item.innerHTML.replace(re_notables, function(match) {
+                const notable_name = match.substring(notable_prefix.length, match.length - 1);
+                const notable_description = notables[notable_name];
+                return '<span title="' + notable_description + '">' + notable_prefix + notable_name + '</span><';
+            });
+        }
         item.classList.add('has-cluster-descriptions');
+        setTimeout(parseNotables, 10);
+    } else {
+        setTimeout(parseNotables, 250);
     }
 };
 
-setInterval(parseNotables, 50);
+parseNotables();
