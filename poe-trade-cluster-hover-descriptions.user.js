@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name         poe-trade-cluster-hover-descriptions
 // @namespace    github.com/Lothrik
-// @version      2020.04.08.1
-// @description  Adds mouseover descriptions to all cluster jewel keystones and notables on pathofexile.com/trade and poe.trade/search.
+// @version      2020.04.10.1
+// @description  Adds mouseover descriptions to all cluster jewel keystones and notables on pathofexile.com/trade, poe.trade, and poeapp.com.
 // @author       Lothrik (MaXiMiUS)#1560 (discordapp.com)
 // @license      MIT
 // @include      *pathofexile.com/trade*
-// @include      *poe.trade/search*
+// @include      *poe.trade*
+// @include      *poeapp.com*
 // ==/UserScript==
 
 /*
@@ -334,10 +335,12 @@ const notable_prefix = '1 Added Passive Skill is ';
 const re_notables = new RegExp(notable_prefix + Object.keys(notables).join('<|' + notable_prefix) + '<', 'g');
 
 var current_trade_site = 0;
-if (window.location.href.indexOf('pathofexile.com/trade') > -1) {
+if (location.href.indexOf('pathofexile.com/trade') > -1) {
     current_trade_site = 1;
-} else if (window.location.href.indexOf('poe.trade/search') > -1) {
+} else if (location.href.indexOf('poe.trade') > -1) {
     current_trade_site = 2;
+} else if (location.href.indexOf('poeapp.com') > -1) {
+    current_trade_site = 3;
 }
 
 function parseNotables() {
@@ -345,9 +348,30 @@ function parseNotables() {
     if (current_trade_site == 1) {
         item = document.querySelector('.itemBoxContent .content:not(.has-cluster-descriptions)');
     } else if (current_trade_site == 2) {
-        item = document.querySelector('.item .item-cell:not(.has-cluster-descriptions)');
+        item = document.querySelector('.item .item-mods:not(.has-cluster-descriptions)');
+    } else if (current_trade_site == 3) {
+        item = document.querySelector('my-app');
+        if (item.shadowRoot) {
+            item = item.shadowRoot.querySelector('#appHeader');
+            if (item) {
+                item = item.querySelector('search-page');
+                if (item.shadowRoot) {
+                    item = item.shadowRoot.querySelector('search-results');
+                    if (item.shadowRoot) {
+                        item = item.shadowRoot.querySelector('search-result:not(.has-cluster-descriptions)');
+                    }
+                }
+            }
+        }
+        if (!item || !item.shadowRoot) {
+            item = null;
+        }
     }
     if (item) {
+        item.classList.add('has-cluster-descriptions');
+        if (current_trade_site == 3) {
+            item = item.shadowRoot.querySelector('.item .mods');
+        }
         if (item.innerHTML.indexOf(keystone_prefix) > -1) {
             item.innerHTML = item.innerHTML.replace(re_keystones, function(match) {
                 const keystone_name = match.substring(keystone_prefix.length, match.length - 1);
@@ -362,7 +386,6 @@ function parseNotables() {
                 return '<span title="' + notable_description + '">' + notable_prefix + notable_name + '</span><';
             });
         }
-        item.classList.add('has-cluster-descriptions');
         setTimeout(parseNotables, 10);
     } else {
         setTimeout(parseNotables, 250);
