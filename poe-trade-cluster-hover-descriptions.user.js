@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         poe-trade-cluster-hover-descriptions
 // @namespace    github.com/Lothrik
-// @version      2020.04.10.1
+// @version      2020.04.18.1
 // @description  Adds mouseover descriptions to all cluster jewel keystones and notables on pathofexile.com/trade, poe.trade, and poeapp.com.
 // @author       Lothrik (MaXiMiUS)#1560 (discordapp.com)
 // @license      MIT
@@ -40,6 +40,8 @@ const keystones = {
 
 /*
 The following changes were manually added to the notables below:
+    Undocumented:
+        Spiked Concoction now only applies to Non-Unique Flasks.
     https://pathofexile.gamepedia.com/Version_3.10.1c:
         Reduced the value of "Auras from your Skills grant 0.2% of Life Regenerated per second to you and Allies" found on the Replenishing Presence notable to 0.1%.
         The Purposeful Harbinger notable now grants "Aura Buffs from Skills have 10% increased Effect on you for each Herald affecting you".
@@ -101,7 +103,7 @@ const notables = {
     "Hex Breaker":"8% increased Attack and Cast Speed while Channelling&#10;Immune to Curses while Channelling",
     "Arcane Adept":"5% increased Attack and Cast Speed while Channelling&#10;Channelling Skills deal 20% increased Damage&#10;Gain Arcane Surge after Channelling for 1 second",
     "Distilled Perfection":"25% increased Life Recovery from Flasks&#10;25% increased Mana Recovery from Flasks&#10;20% increased Flask Effect Duration",
-    "Spiked Concoction":"Flasks applied to you have 10% increased Effect&#10;5% increased Attack and Cast Speed during any Flask Effect",
+    "Spiked Concoction":"Non-Unique Flasks applied to you have 10% increased Effect&#10;5% increased Attack and Cast Speed during any Flask Effect",
     "Fasting":"20% increased Flask Charges gained&#10;20% increased Movement Speed while under no Flask Effects",
     "Mender's Wellspring":"25% increased Life Recovery from Flasks&#10;Life Flasks gain 1 Charge every 3 seconds&#10;Remove Bleeding when you use a Life Flask",
     "Special Reserve":"20% increased Damage during any Flask Effect&#10;Regenerate 2% of Life per second during any Flask Effect",
