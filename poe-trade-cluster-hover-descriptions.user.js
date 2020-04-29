@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         poe-trade-cluster-hover-descriptions
 // @namespace    github.com/Lothrik
-// @version      2020.04.18.1
+// @version      2020.04.28.1
 // @description  Adds mouseover descriptions to all cluster jewel keystones and notables on pathofexile.com/trade, poe.trade, and poeapp.com.
 // @author       Lothrik (MaXiMiUS)#1560 (discordapp.com)
 // @license      MIT
@@ -336,6 +336,8 @@ const re_keystones = new RegExp(keystone_prefix + Object.keys(keystones).join('<
 const notable_prefix = '1 Added Passive Skill is ';
 const re_notables = new RegExp(notable_prefix + Object.keys(notables).join('<|' + notable_prefix) + '<', 'g');
 
+const valid_class_names = { notableProperty: true, separator: true };
+
 var current_trade_site = 0;
 if (location.href.indexOf('pathofexile.com/trade') > -1) {
     current_trade_site = 1;
@@ -349,6 +351,19 @@ function parseNotables() {
     var item = null;
     if (current_trade_site == 1) {
         item = document.querySelector('.itemBoxContent .content:not(.has-cluster-descriptions)');
+        // remove the default notable description elements in favor of hover tooltips
+        var notableProperty = document.querySelector('.notableProperty');
+        if (notableProperty) {
+            var notableNextSibling     = notableProperty.nextElementSibling;
+            var notablePreviousSibling = notableProperty.previousElementSibling;
+            if (valid_class_names[notableNextSibling.className]) {
+                notableNextSibling.remove();
+            }
+            if (valid_class_names[notablePreviousSibling.className]) {
+                notablePreviousSibling.remove();
+            }
+            notableProperty.remove();
+        }
     } else if (current_trade_site == 2) {
         item = document.querySelector('.item .item-mods:not(.has-cluster-descriptions)');
     } else if (current_trade_site == 3) {
