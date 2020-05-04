@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         poe-trade-cluster-hover-descriptions
 // @namespace    github.com/Lothrik
-// @version      2020.04.28.1
+// @version      2020.05.03.1
 // @description  Adds mouseover descriptions to all cluster jewel keystones and notables on pathofexile.com/trade, poe.trade, and poeapp.com.
 // @author       Lothrik (MaXiMiUS)#1560 (discordapp.com)
 // @license      MIT
@@ -356,10 +356,10 @@ function parseNotables() {
         if (notableProperty) {
             var notableNextSibling     = notableProperty.nextElementSibling;
             var notablePreviousSibling = notableProperty.previousElementSibling;
-            if (valid_class_names[notableNextSibling.className]) {
+            if (notableNextSibling && valid_class_names[notableNextSibling.className]) {
                 notableNextSibling.remove();
             }
-            if (valid_class_names[notablePreviousSibling.className]) {
+            if (notablePreviousSibling && valid_class_names[notablePreviousSibling.className]) {
                 notablePreviousSibling.remove();
             }
             notableProperty.remove();
