@@ -459,10 +459,10 @@ const notables = {
     "Tempt the Storm":"40% increased Conductivity Curse Effect&#10;25% increased Mana Regeneration Rate",
     "Blood Artist":"+6% to Physical Damage over time Multiplier if you've Spent Life Recently&#10;+20 to Strength",
     "Phlebotomist":"+6% to Physical Damage over Time Multiplier if you've dealt a Critical Strike Recently&#10;20% increased Critical Strike Chance",
-	"Hound's Mark":"20% increased Effect of your Marks&#10;20% increased Damage with Hits and Ailments against Marked Enemy",
-	"Doedre's Gluttony":"40% increased Punishment Curse Effect&#10;25% increased Damage with Hits against Enemies that are on Low Life",
-	"Doedre's Apathy":"20% increased Temporal Chains Curse Effect&#10;10% reduced Elemental Ailment Duration on you",
-	"Master of the Maelstrom":"40% increased Elemental Weakness Curse Effect&#10;10% chance to Freeze, Shock and Ignite"
+    "Hound's Mark":"20% increased Effect of your Marks&#10;20% increased Damage with Hits and Ailments against Marked Enemy",
+    "Doedre's Gluttony":"40% increased Punishment Curse Effect&#10;25% increased Damage with Hits against Enemies that are on Low Life",
+    "Doedre's Apathy":"20% increased Temporal Chains Curse Effect&#10;10% reduced Elemental Ailment Duration on you",
+    "Master of the Maelstrom":"40% increased Elemental Weakness Curse Effect&#10;10% chance to Freeze, Shock and Ignite"
 };
 
 const keystone_prefix = 'Adds ';
