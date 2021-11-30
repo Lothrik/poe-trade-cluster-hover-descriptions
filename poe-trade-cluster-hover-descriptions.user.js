@@ -133,6 +133,7 @@ The following changes were manually added to the notables below:
         Hit and Run Cluster Jewel Notable: Now grants 6% chance to Suppress Spell Damage if you've Hit an enemy recently.
         Untouchable Cluster Jewel Notable: Now grants 6% chance to Suppress Spell Damage.
         Elegant Form Cluster Jewel Notable: Now grants 6% chance to Suppress Spell Damage.
+        Darting Movement Cluster Jewel Notable: Now grants 8% chance to Suppress Spell Damage while moving.
         The increased Aura Effect of Auras on you from the Purposeful Harbinger Cluster Jewel Notable now only applies to your own Auras Effect on you.
         Replenishing Presence no longer has 6% increased Effect of Non-Curse Auras from your Skills. It now has Non-Curse Aura Skills have 20% increased Duration.
         Master of Command now has 100% increased Mana Reservation Efficiency of Banner Skills (previously 50% reduced Reservation).
@@ -424,7 +425,7 @@ const notables = {
     "One with the Shield":"Recover 50 Life when you Block&#10;50% increased Defences from Equipped Shield&#10;+5% Chance to Block Attack Damage while holding a Shield",
     "Aerialist":"3% chance to Dodge Attack Hits&#10;3% chance to Dodge Spell Hits&#10;5% increased Dexterity",
     "Elegant Form":"20% chance to Avoid Elemental Ailments&#10;+6% chance to Suppress Spell Damage",
-    "Darting Movements":"3% increased Movement Speed&#10;5% chance to Dodge Attack and Spell Hits while moving",
+    "Darting Movements":"3% increased Movement Speed&#10;+8% chance to Suppress Spell Damage while moving",
     "No Witnesses":"10% chance to gain Elusive on Kill&#10;25% increased Elusive Effect", /* Legacy, no longer obtainable as of 3.11.0. */
     "Molten One's Mark":"+2% to maximum Fire Resistance&#10;Regenerate 1% of Life per second",
     "Fire Attunement":"30% reduced Ignite Duration on you&#10;Unaffected by Burning Ground&#10;You cannot be Ignited if you've been Ignited Recently",
