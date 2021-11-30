@@ -44,6 +44,7 @@ The following changes were manually added to the notables below:
     Undocumented:
         Spiked Concoction now only applies to Non-Unique Flasks.
         Eye of the Storm now grants +10% to Damage over Time Multiplier for Ignite from Critical Strikes (from 20%).
+        Aerialist no longer grants 3% chance to Dodge Attack and Spell Hits. It now has +6% chance to Suppress Spell Damage.
     https://www.poewiki.net/wiki/Version_3.10.1c:
         Reduced the value of "Auras from your Skills grant 0.2% of Life Regenerated per second to you and Allies" found on the Replenishing Presence notable to 0.1%.
         The Purposeful Harbinger notable now grants "Aura Buffs from Skills have 10% increased Effect on you for each Herald affecting you".
@@ -423,7 +424,7 @@ const notables = {
     "Mage Hunter":"4% Chance to Block Spell Damage&#10;20% increased Spell Damage&#10;20% chance to gain a Power Charge when you Block",
     "Riot Queller":"+4% Chance to Block Attack Damage&#10;Enemies Taunted by you take 6% increased Damage",
     "One with the Shield":"Recover 50 Life when you Block&#10;50% increased Defences from Equipped Shield&#10;+5% Chance to Block Attack Damage while holding a Shield",
-    "Aerialist":"3% chance to Dodge Attack Hits&#10;3% chance to Dodge Spell Hits&#10;5% increased Dexterity",
+    "Aerialist":"+6% chance to Suppress Spell Damage&#10;5% increased Dexterity",
     "Elegant Form":"20% chance to Avoid Elemental Ailments&#10;+6% chance to Suppress Spell Damage",
     "Darting Movements":"3% increased Movement Speed&#10;+8% chance to Suppress Spell Damage while moving",
     "No Witnesses":"10% chance to gain Elusive on Kill&#10;25% increased Elusive Effect", /* Legacy, no longer obtainable as of 3.11.0. */
